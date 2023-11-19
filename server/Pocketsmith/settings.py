@@ -146,3 +146,5 @@ RESTFRAMEWORK = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+WSGI_APPLICATION = 'Pocketsmith.wsgi.app'
