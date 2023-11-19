@@ -1,4 +1,4 @@
 server/.env
 server/env.bat
 server/.venv
-server/_pycache_
+server/__pycache__
