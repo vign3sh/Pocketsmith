@@ -1,0 +1,1 @@
+web: gunicorn Pocketsmith.wsgi --log-file -
