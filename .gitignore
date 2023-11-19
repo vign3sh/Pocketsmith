@@ -3,3 +3,7 @@ server/env.bat
 server/.venv
 server/__pycache__
 server/Pocketsmith/__pycache__/*
+server/authentication/__pycache__/*
+server/expenses/__pycache__/*
+server/usergroups/__pycache__/*
+server/userprofile/__pycache__/*

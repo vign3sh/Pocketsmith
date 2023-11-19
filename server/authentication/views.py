@@ -7,6 +7,7 @@ from authentication.models import UserProfile
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import AnonymousUser
+from django.http import HttpResponse
 # Create your views here.
 
 class CheckAuthenticatedView(APIView):
@@ -106,4 +107,13 @@ class GetCSRFToken(APIView):
 
     def get(self, request, format=None):
         return Response({ 'success': 'CSRF cookie set' })
+    
+
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class HomePageView(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request, format=None):
+        # return HTML page
+        return HttpResponse("<html><body><h1>Welcome to the API</h1></body></html>")
 
