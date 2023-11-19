@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "Pocketsmith/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "Pocketsmith/wsgi.py"
+    }
+  ]
+}
