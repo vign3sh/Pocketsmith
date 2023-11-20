@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from django.contrib.auth.models import AnonymousUser
 from bson import ObjectId
 import json
+from rest_framework import permissions
+
 # Create your views here.
 
 class AddExpense(APIView):
@@ -23,38 +25,30 @@ class AddExpense(APIView):
         '''
 
 
-        if isinstance(user, AnonymousUser):
-            return Response({ 'error': 'User is not logged in' })
+        
         try:
-            userProfile=UserProfile.objects.get(user_id=user.id)
+            #userProfile=UserProfile.objects.get(user_id=user.id)
             client,dbhandle=get_db_handle('pocketclusters')
             collection_name = dbhandle["expenses"]
-
-            #let's create two documents
-            record_1 = {
-                "paid_id": paid_id,
-                "amount" : amount,
-            }
+           
             # Insert the documents
             collection_name.insert_many([data])
-            # Check the count
-            #count = collection_name.count()
-            #print(count)
+
             return Response({ 'success': 'Expense added successfully' })
         except:
             return Response({ 'error': 'Something went wrong when trying to add record' })
         
 
 class GetAllExpenses(APIView):
+    permission_classes = [permissions.IsAdminUser]
     def get(self, request, format=None):
         user = self.request.user
-        if isinstance(user, AnonymousUser):
-            return Response({ 'error': 'User is not logged in' })
+
         try:
             client,dbhandle=get_db_handle('pocketclusters')
             collection_name = dbhandle["expenses"]
             obj_id='6557cccf8191f7fd133e7c67'
-           #get all expenses
+            #get all expenses
             expenses = collection_name.find()
             #expenses = collection_name.find_one({'_id': ObjectId(obj_id)})
             # convert this mongo object to a list
@@ -66,9 +60,6 @@ class GetAllExpenses(APIView):
         
 class GetExpenseById(APIView):
     def get(self, request, format=None):
-        user = self.request.user
-        if isinstance(user, AnonymousUser):
-            return Response({ 'error': 'User is not logged in' })
         
         try:
             
@@ -93,3 +84,19 @@ class GetExpenseById(APIView):
         except Exception as e:
             return Response({ 'error': e })
         
+
+class GetExpenseByUserId(APIView):
+    def get(self, request, format=None):
+
+        try:
+            client,dbhandle=get_db_handle('pocketclusters')
+            collection_name = dbhandle["expenses"]
+            
+           #get all expenses
+            #expenses = collection_name.find()
+            expenses = collection_name.find(self.request.data)
+            # convert this mongo object to a list
+            expenses = json.dumps(list(expenses), default=str)
+            return Response({'data':expenses})
+        except Exception as e:
+            return Response({ 'error': e })

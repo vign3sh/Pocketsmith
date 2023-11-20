@@ -10,7 +10,9 @@ from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse
 # Create your views here.
 
+@method_decorator(csrf_protect, name='dispatch')
 class CheckAuthenticatedView(APIView):
+    permission_classes = (permissions.AllowAny,)
     def get(self, request, format=None):
         user = self.request.user
 
@@ -72,10 +74,16 @@ class LoginView(APIView):
 
         try:
             user = auth.authenticate(username=username, password=password)
-            userProfile=UserProfile.objects.get(user_id=user.id)
+            
+            
             if user is not None:
                 auth.login(request, user)
-                return Response({ 'success': 'User authenticated', 'first_name':userProfile.first_name})
+                if not user.is_staff:
+                    userProfile=UserProfile.objects.get(user_id=user.id)
+                    return Response({ 'success': 'User authenticated', 'first_name':userProfile.first_name})
+                return Response({ 'success': 'User authenticated', 'first_name':user.first_name})
+                    
+
             else:
                 return Response({ 'error': 'Error Authenticating' })
         except:
@@ -89,11 +97,10 @@ class LogoutView(APIView):
         except:
             return Response({ 'error': 'Something went wrong when logging out' })
 
+
 class DeleteAccountView(APIView):
     def delete(self, request, format=None):
         user = self.request.user
-        if isinstance(user, AnonymousUser):
-            return Response({ 'error': 'User is not logged in' })
         try:
             User.objects.filter(id=user.id).delete()
 
@@ -109,10 +116,9 @@ class GetCSRFToken(APIView):
         return Response({ 'success': 'CSRF cookie set' })
     
 
-@method_decorator(ensure_csrf_cookie, name='dispatch')
+@method_decorator(csrf_protect, name='dispatch')
 class HomePageView(APIView):
-    permission_classes = (permissions.AllowAny, )
-
+    permission_classes = (permissions.AllowAny,)
     def get(self, request, format=None):
         # return HTML page
         return HttpResponse("<html><body><h1>Welcome to the API</h1></body></html>")
