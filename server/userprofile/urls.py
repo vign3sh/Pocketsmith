@@ -1,8 +1,8 @@
 from django.urls import path, include
-from .views import GetAllPublicUsers, BulkDeleteUsers
+from .views import GetAllPublicUsers, BulkDeleteTestUsers
 urlpatterns = [
     
     path('getAllPublicUsers',GetAllPublicUsers.as_view()),
-    path('bulkDeleteUsers', BulkDeleteUsers.as_view()),
+    path('bulkDeleteTestUsers', BulkDeleteTestUsers.as_view()),
     
 ]

@@ -8,6 +8,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
 from authentication.seralizers import UserProfileSerializer
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import User
 # Create your views here.
 
 class GetAllPublicUsers(APIView):
@@ -26,14 +27,17 @@ class GetAllPublicUsers(APIView):
         except:
             return Response({ 'error': 'Something went wrong when retrieving profiles' })
 
-class BulkDeleteUsers(APIView):
+class BulkDeleteTestUsers(APIView):
+    permission_classes = [permissions.IsAdminUser]
     def delete(self, request, format=None):
-        data = self.request.data
-        import pdb;pdb.set_trace()
-        users=User.objects.filter(id__in=data.user_ids)
+        
+        #users=User.objects.filter(id__in=data.user_ids)
+        users=User.objects.filter(is_staff=False) & User.objects.filter(username__istartswith="test")
+        
         for user in users:
             try:
-                User.objects.filter(id=user.id).delete()
-                return Response({ 'success': 'User deleted successfully' })
+                user.delete()
+                
             except:
                 return Response({ 'error': 'Something went wrong when trying to delete user' })
+        return Response({ 'success': 'User deleted successfully' })
