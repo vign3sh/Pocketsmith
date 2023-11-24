@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'whitenoise.runserver_nostatic',
     'authentication',
     'expenses',
     'usergroups',
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'Pocketsmith.urls'
@@ -130,6 +132,8 @@ STATICFILES_DIRS = [
     BASE_DIR.joinpath('build') #Changed from STATICFILES_DIRS = []
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
