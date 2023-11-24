@@ -7,7 +7,6 @@ server/authentication/__pycache__/*
 server/expenses/__pycache__/*
 server/usergroups/__pycache__/*
 server/userprofile/__pycache__/*
-server/static/*
 
 client/*
 # Logs
