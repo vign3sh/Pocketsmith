@@ -8,7 +8,7 @@ server/expenses/__pycache__/*
 server/usergroups/__pycache__/*
 server/userprofile/__pycache__/*
 
-client/*
+
 # Logs
 client/logs
 client/*.log
@@ -22,6 +22,8 @@ client/node_modules
 client/dist
 client/dist-ssr
 client/*.local
+client/.env
+client/dist/*
 
 # Editor directories and files
 startServer.bat
