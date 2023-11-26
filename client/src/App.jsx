@@ -6,8 +6,6 @@ import Layout from './hocs/Layout';
 
 import Authentication from './containers/authentication/Authentication';
 import Home from './containers/Home';
-import Login from './containers/Login';
-import Register from './containers/Register';
 import Dashboard from './containers/Dashboard';
 import Friends from './containers/friends/Friends';
 import Groups from './containers/groups/Groups';

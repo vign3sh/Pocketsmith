@@ -29,6 +29,7 @@ client/dist/*
 # Editor directories and files
 server/setupReactRunserver.py
 startServer.bat
+server/startServer.py
 .vscode/*
 !.vscode/extensions.json
 .idea

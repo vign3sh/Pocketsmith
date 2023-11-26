@@ -13,6 +13,58 @@ import {
 } from './types';
 import axios from 'axios';
 
+export const checkAuthenticated = () => async dispatch => {
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    };
+    const body = JSON.stringify({ 
+        
+    });
+
+
+    try {
+        //console.log(config);
+        
+        let base_url = window.location.origin;
+        if (base_url==='http://localhost:5173'){
+            //base_url = 'http://localhost:8000'
+            base_url = 'http://127.0.0.1:8000'
+        }
+        axios.defaults.baseURL = base_url;
+        let reg_url='/authenticate/authenticated';
+        const res = await axios.get(reg_url, body, config);
+
+        if (res.data.error || res.data.isAuthenticated === 'error') {
+            dispatch({
+                type: AUTHENTICATED_FAIL,
+                payload: false
+            });
+        } 
+        else if (res.data.isAuthenticated === 'success') {
+            dispatch({
+                type: AUTHENTICATED_SUCCESS,
+                payload: true
+            });
+        }
+        else {
+            dispatch({
+                type: AUTHENTICATED_FAIL,
+                payload: false
+            });
+        }
+    } 
+    
+    catch (err) {
+        dispatch({
+            type: AUTHENTICATED_FAIL,
+            payload: false
+        });
+    }
+};
+
 
 export const register = (username, password, re_password) => async dispatch => {
     
@@ -48,6 +100,7 @@ export const register = (username, password, re_password) => async dispatch => {
         });
     }
 };
+
 
 export const login = (username, password) => async dispatch => {
     

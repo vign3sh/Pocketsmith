@@ -18,7 +18,14 @@ import { useEffect } from "react";
 import CSRFToken from '../../components/CSRFToken';
   
   // TODO remove, this demo shouldn't need to reset the theme.
-const authentication = ({dispatch}) => {
+const authentication = ({  isAuthenticated,dispatch }) => {
+
+    const navigate = useNavigate();
+    let base_url = window.location.origin;
+    if (isAuthenticated && base_url!=='http://localhost:5173'){
+      navigate("/friends");
+    }
+
     const defaultTheme = createTheme();
 
     const [formData, setFormData] = useState({
@@ -61,7 +68,7 @@ const authentication = ({dispatch}) => {
       };
       
       // get value isAuthenticated from redux store
-      const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+      /*const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
       const navigate = useNavigate();
       useEffect(() => {
         // Checking if user is loggedIn
@@ -69,6 +76,8 @@ const authentication = ({dispatch}) => {
           navigate("/friends");
         }
       }, [navigate, isAuthenticated]);
+      */
+
 
       let ConfirmPasswordField = basePage==='register' ?
             (<TextField
@@ -123,7 +132,7 @@ const authentication = ({dispatch}) => {
                 <Box noValidate sx={{ mt: 1 }}>
                 <CssBaseline />
                 <form onSubmit={onSubmit}>
-                  
+                  <CSRFToken/>
                   <TextField
                     margin="normal"
                     required
@@ -174,5 +183,9 @@ const authentication = ({dispatch}) => {
         </ThemeProvider>
       );
 }
-export default connect()(authentication);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps)(authentication);
+
 

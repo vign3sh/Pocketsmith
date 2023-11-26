@@ -152,13 +152,13 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 
 WSGI_APPLICATION = 'Pocketsmith.wsgi.app'
-CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_HTTPONLY = False
-SESSION_COOKIE_HTTPONLY = False
+
 
 
 '''
-
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = False
 CORS_ALLOW_CREDENTIALS = True
 # change to https://app.example.com in production settings
 CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']

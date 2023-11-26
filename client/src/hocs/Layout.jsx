@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Fragment } from "react";
 import BottomNavbar from "../components/BottomNavbar";
 import { useLocation } from "react-router-dom";
-import CSRFToken from "../components/CSRFToken";
-const layout = ({children}) => {
+import { connect } from "react-redux";
+import { checkAuthenticated } from "../actions/auth";
+
+const layout = ({children, checkAuthenticated}) => {
+    useEffect(() => {
+        checkAuthenticated();
+    }, []);
     let layoutLoc = useLocation().pathname;
     layoutLoc = layoutLoc.substring(0,15);
     
     return (
         <Fragment>
-            <CSRFToken/>
+            
             {layoutLoc !== "/authentication" ? <BottomNavbar/>:null} 
             {children}
         </Fragment>
     );
 }
-export default layout;
+export default connect(null, {checkAuthenticated})(layout);
 
