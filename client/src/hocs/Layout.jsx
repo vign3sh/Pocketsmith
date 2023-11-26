@@ -5,11 +5,12 @@ import { useLocation } from "react-router-dom";
 import CSRFToken from "../components/CSRFToken";
 const layout = ({children}) => {
     let layoutLoc = useLocation().pathname;
-    layoutLoc = layoutLoc.substring(0,13);
+    layoutLoc = layoutLoc.substring(0,15);
     
     return (
         <Fragment>
-            {layoutLoc !== "/authenticate" ? <BottomNavbar/>:<CSRFToken/>} 
+            <CSRFToken/>
+            {layoutLoc !== "/authentication" ? <BottomNavbar/>:null} 
             {children}
         </Fragment>
     );

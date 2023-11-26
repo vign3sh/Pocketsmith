@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const CSRFToken = () => {
-    console.log('In CSRFToken');
+    //console.log('In CSRFToken');
     const [csrftoken, setcsrftoken] = useState('a');
 
     const getCookie = (name) => {
@@ -25,17 +25,19 @@ const CSRFToken = () => {
             try {
                 let base_url = window.location.origin;
                 if (base_url==='http://localhost:5173'){
-                    base_url = 'http://localhost:8000'
-                    //base_url = 'http://127.0.0.1:8000/'
+                    //base_url = 'http://localhost:8000'
+                    base_url = 'http://127.0.0.1:8000'
                 }
-                await axios.get(base_url+'/authenticate/csrf_cookie');
+                console.log(base_url);
+                axios.defaults.baseURL = base_url;
+                await axios.get('/authenticate/csrf_cookie');
             } catch (err) {
-
+                console.log(err);
             }
         };
 
         fetchData();
-        console.log(document.cookie);
+        //console.log(document.cookie);
         setcsrftoken(getCookie('csrftoken'));
     }, []);
 

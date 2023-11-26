@@ -11,7 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import backgroundImage from "../../images/backgroundImage.jpg"
-import { register } from '../../actions/auth';
+import { register,login } from '../../actions/auth';
 import { useSelector, connect } from 'react-redux';
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react";
@@ -19,52 +19,52 @@ import CSRFToken from '../../components/CSRFToken';
   
   // TODO remove, this demo shouldn't need to reset the theme.
 const authentication = ({dispatch}) => {
-  const defaultTheme = createTheme();
+    const defaultTheme = createTheme();
 
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    re_password: ''
-  });
+    const [formData, setFormData] = useState({
+      username: '',
+      password: '',
+      re_password: ''
+    });
 
-  const [accountCreated, setAccountCreated] = useState(false);
 
-  const { username, password, re_password } = formData;
+    const { username, password, re_password } = formData;
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
-      e.preventDefault();
-
+    const register_request = () => {
       if (password === re_password) {
-          setAccountCreated(true);
-          basePage === 'register' ? console.log('registering'):console.log('logging in');
-          dispatch(register(username,password,re_password))
+        //console.log('registering');
+        dispatch(register(username,password,re_password))
+        }
+      else {
+        console.log('Passwords do not match');
       }
-  };
+    };
+  
+    const login_request = () => {    
+      //console.log('logging in');
+      dispatch(login(username,password))
+    };
+
+      
+    const onSubmit = e => {
+        e.preventDefault();
+        basePage === 'register' ? register_request():login_request();
+        
+    };
 
       // Use state to mange switching between login and register pages
-      const [basePage, setBasePage] = useState('login'); // initial value
-      const switchPages = () => {
+    const [basePage, setBasePage] = useState('login'); // initial value
+    const switchPages = () => {
         setBasePage(basePage === 'register' ? 'login' : 'register');
       };
       
       // get value isAuthenticated from redux store
       const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
       const navigate = useNavigate();
-      // if user is authenticated, redirect to dashboard
-      //const isAuthenticated = true;
-      /*
       useEffect(() => {
-        // Checking if user is not loggedIn
-        if (!isAuthenticated) {
-          navigate("/");
-        } else {
-          navigate("/friends");
-        }
-      }, [navigate, isAuthenticated]);*/
-      useEffect(() => {
-        // Checking if user is not loggedIn
+        // Checking if user is loggedIn
         if (isAuthenticated) {
           navigate("/friends");
         }
@@ -128,10 +128,10 @@ const authentication = ({dispatch}) => {
                     margin="normal"
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                     onChange={e => onChange(e)}
                   />

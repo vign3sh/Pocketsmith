@@ -24,37 +24,19 @@ export const register = (username, password, re_password) => async dispatch => {
         }
     };
 
-    //const body = JSON.stringify({ username, password, re_password });
-    const body =JSON.stringify(
-    {
-        "username": "test_user1",
-        "password": "testpassword1",
-        "re_password": "testpassword1",
-        "first_name" : "test_user1",
-        "last_name" : "",
-        "phone" : "",
-        "email" : "",
-        "is_public" :true
-    });
-    console.log(body);
+    const body = JSON.stringify({ 
+        "username": username,
+        "password": password,
+        "re_password": re_password });
     try {
-        let base_url = window.location.origin;
-                if (base_url==='http://localhost:5173'){
-                    base_url = 'http://localhost:8000'
-                }
-                
-        let reg_url=base_url+'/authenticate/register';
-        /*
-        let isAuthenticated=await axios.get('http://127.0.0.1:8000/authenticate/authenticated');
-        console.log(isAuthenticated);*/
+        let reg_url='/authenticate/register';
         const res = await axios.post(reg_url, body, config);
-        console.log(res);
+        //console.log(res);
         if (res.data.error) {
             dispatch({
                 type: REGISTER_FAIL
             });
         } else {
-            alert('Sucessfully registered');
             dispatch({
                 type: REGISTER_SUCCESS
             });
@@ -63,6 +45,78 @@ export const register = (username, password, re_password) => async dispatch => {
         console.log(err);
         dispatch({
             type: REGISTER_FAIL
+        });
+    }
+};
+
+export const login = (username, password) => async dispatch => {
+    
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': Cookies.get('csrftoken')
+        }
+    };
+
+    const body = JSON.stringify({ 
+        "username": username,
+        "password": password
+    });
+
+    
+    try {
+        let reg_url='/authenticate/login';
+        const res = await axios.post(reg_url, body, config);
+        if (res.data.error) {
+            dispatch({
+                type: LOGIN_FAIL
+            });
+        } else {
+            dispatch({
+                type: LOGIN_SUCCESS
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({
+            type: LOGIN_FAIL
+        });
+    }
+};
+
+
+export const logout = () => async dispatch => {
+    
+    const config = {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': Cookies.get('csrftoken')
+        }
+    };
+    const body = JSON.stringify({ 
+        
+    });
+
+
+    try {
+        //console.log(config);
+        let reg_url='/authenticate/logout';
+        const res = await axios.post(reg_url, body, config);
+        if (res.data.error) {
+            dispatch({
+                type: LOGOUT_FAIL
+            });
+        } else {
+            dispatch({
+                type: LOGOUT_SUCCESS
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        dispatch({
+            type: LOGOUT_FAIL
         });
     }
 };

@@ -1,6 +1,7 @@
 server/.env
 server/env.bat
 server/.venv
+server/db.sqlite3
 server/__pycache__
 server/Pocketsmith/__pycache__/*
 server/authentication/__pycache__/*
@@ -26,6 +27,7 @@ client/.env
 client/dist/*
 
 # Editor directories and files
+server/setupReactRunserver.py
 startServer.bat
 .vscode/*
 !.vscode/extensions.json
