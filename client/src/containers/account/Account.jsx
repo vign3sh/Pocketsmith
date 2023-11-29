@@ -18,6 +18,7 @@ const account = ({dispatch}) => {
           logout_request();
           
       };
+      /*
       const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
       const navigate = useNavigate();
       let base_url = window.location.origin;
@@ -29,7 +30,7 @@ const account = ({dispatch}) => {
         }
       }, [navigate, isAuthenticated]);
     }
-      
+    */
     return(
         <Box>
             <form onSubmit={onSubmit}>   

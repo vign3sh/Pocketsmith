@@ -28,7 +28,7 @@ const CSRFToken = () => {
                     //base_url = 'http://localhost:8000'
                     base_url = 'http://127.0.0.1:8000'
                 }
-                console.log(base_url);
+                //console.log(base_url);
                 axios.defaults.baseURL = base_url;
                 await axios.get('/authenticate/csrf_cookie');
             } catch (err) {
@@ -38,7 +38,9 @@ const CSRFToken = () => {
 
         fetchData();
         //console.log(document.cookie);
-        setcsrftoken(getCookie('csrftoken'));
+        if(getCookie('csrftoken')!==null){
+            setcsrftoken(getCookie('csrftoken'));
+        }
     }, []);
 
     return (

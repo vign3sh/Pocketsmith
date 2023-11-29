@@ -19,8 +19,6 @@ import {
 
 const bottomNavbar = () => {
   const location = useLocation().pathname;
-  let addExpenseRoute = location==='/friends' || location==='/groups' ?`${location}/addExpense`:'/addExpense';
-    
     return (
       
         
@@ -36,7 +34,7 @@ const bottomNavbar = () => {
             >
             <BottomNavigationAction component={Link}  to="/friends"  value="/friends" label="Friends" icon={location=== '/friends' ? <PersonIcon/> : <PersonOutlineIcon/>}/>
             <BottomNavigationAction component={Link}  to="/groups" value="/groups" label="Groups" icon={location === '/groups' ? <PeopleIcon /> : <PeopleOutlinedIcon />} />
-            <BottomNavigationAction component={Link}  to={addExpenseRoute} value={addExpenseRoute} icon={<AddCircleIcon style={{ fontSize: 40, color:"teal" }} />}/>
+            <BottomNavigationAction component={Link}  to="/addExpense" state={ { from: location } } value='/addExpense' icon={<AddCircleIcon style={{ fontSize: 40, color:"teal" }} />}/>
             <BottomNavigationAction component={Link}  to="/activity" value="/activity" label="Activity" icon={location==='/activity' ? <ReceiptIcon/> : <ReceiptOutlinedIcon/>}/>
             <BottomNavigationAction component={Link}  to="/account" value="/account" label="Account" icon={<SettingsIcon/>}/>
           

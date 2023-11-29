@@ -1,24 +1,25 @@
 import React, { useEffect } from "react";
 import { Fragment } from "react";
-import BottomNavbar from "../components/BottomNavbar";
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { checkAuthenticated } from "../actions/auth";
+import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const layout = ({children, checkAuthenticated}) => {
+const layout = ({checkAuthenticated}) => {
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     useEffect(() => {
-        checkAuthenticated();
-    }, []);
-    let layoutLoc = useLocation().pathname;
-    layoutLoc = layoutLoc.substring(0,15);
-    
+        if (isAuthenticated === undefined || isAuthenticated === null){
+            checkAuthenticated();
+        }
+        
+    });
     return (
         <Fragment>
-            
-            {layoutLoc !== "/authentication" ? <BottomNavbar/>:null} 
-            {children}
+            <Outlet/>
         </Fragment>
     );
 }
+
 export default connect(null, {checkAuthenticated})(layout);
 

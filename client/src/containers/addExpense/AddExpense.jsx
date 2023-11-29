@@ -1,10 +1,14 @@
 import React from "react";
-// Pass in basePage as a prop
-// https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
-const addExpense = ({basePage=''}) => {
+import {useLocation} from "react-router-dom";
+const addExpense = () => {
+    const location = useLocation();
+    let prevPage = location.state?.from;
+    let addExpenseViews = {friend:'/friends', groups:'/groups'};
+    let addExpenseView= Object.keys(addExpenseViews).find(key => prevPage.startsWith(addExpenseViews[key]));
+    addExpenseView = addExpenseView===undefined? 'default':addExpenseView;
     return(
     <div>
-        Add {basePage} Expenses
+        Add Expenses: {addExpenseView} first
     </div>
     );
 }
