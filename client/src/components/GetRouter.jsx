@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, Navigate} from "react-router-dom";
 import Layout from "../hocs/Layout";
 import ErrorPage from "./ErrorPage";
 import PrivateRoutes from "../hocs/PrivateRoutes";
@@ -10,8 +10,15 @@ import Groups from "../containers/groups/Groups";
 import AddExpense from "../containers/addExpense/AddExpense";
 import Activity from "../containers/activity/Activity";
 import Account from "../containers/account/Account";
+import Pending from "../containers/stockBuddy/Pending";
+
+
 
 export function getRouter(store) {
+    const stockBuudyRoutes={
+        path: "/stockBuddy",
+        element: <PrivateRoutes bottomBar={false} ><Pending/></PrivateRoutes>,
+    };
     return (
         createBrowserRouter([
         {
@@ -21,7 +28,7 @@ export function getRouter(store) {
             children: [
                 {
                     path: '/',
-                    element:<AutenticationRoutes><Authentication/></AutenticationRoutes>,
+                    element:<AutenticationRoutes><Navigate to="/authentication" replace={true} /></AutenticationRoutes>,
                 },
                 {
                     path: "/authentication",
@@ -51,8 +58,10 @@ export function getRouter(store) {
                     path: "/account",
                     element:<PrivateRoutes><Account/></PrivateRoutes>,
                 },
+                stockBuudyRoutes,
               ],
-        }
+        },
+        
         
       ]));
 }
