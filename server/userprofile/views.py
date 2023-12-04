@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from authentication.seralizers import UserProfileSerializer
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.models import User
+from django.db.models import Q
 # Create your views here.
 
 class GetAllPublicUsers(APIView):
@@ -41,3 +42,33 @@ class BulkDeleteTestUsers(APIView):
             except:
                 return Response({ 'error': 'Something went wrong when trying to delete user' })
         return Response({ 'success': 'User deleted successfully' })
+
+class GetUsers(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get (self, request):
+        try:
+            
+            user = self.request.user
+            data = self.request.GET
+            
+            searchTerm = data.get('search', '')
+            if searchTerm == '':
+                return Response({ 'error': 'Search term is required' })
+            user_profiles = UserProfile.objects.filter( Q(first_name__icontains=searchTerm) 
+            | Q(last_name__icontains=searchTerm)
+            | Q(username__icontains=searchTerm)
+            | Q(email__icontains=searchTerm)
+            | Q(phone__icontains=searchTerm)
+            , is_public=True,) | UserProfile.objects.filter( Q(username=searchTerm)
+            | Q(email=searchTerm)
+            | Q(phone=searchTerm))
+            #user_profiles = UserProfile.objects.filter(is_public=True)
+
+            #user_profiles = UserProfile.objects.all()
+            # get multiple users from UserProfile
+            
+            users_details = UserProfileSerializer(user_profiles, many=True)
+            
+            return Response({ 'profiles': users_details.data})
+        except:
+            return Response({ 'error': 'Something went wrong when retrieving profiles' })

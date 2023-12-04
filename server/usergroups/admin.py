@@ -1,3 +1,3 @@
 from django.contrib import admin
-
-# Register your models here.
+from usergroups.models import Group
+admin.site.register(Group)

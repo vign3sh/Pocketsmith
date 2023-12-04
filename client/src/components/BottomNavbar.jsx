@@ -19,6 +19,8 @@ import {
 
 const bottomNavbar = () => {
   const location = useLocation().pathname;
+  let links = {'/friends':'/friends', '/groups':'/groups', '/addExpense':'/addExpense', '/activity':'/activity', '/account':'/account'};
+  let selectedPage= Object.keys(links).find(key => location.startsWith(links[key]));
     return (
       
         
@@ -28,9 +30,7 @@ const bottomNavbar = () => {
         >
           <BottomNavigation
             showLabels
-            value={location}
-            //get value from url
-            //https://stackoverflow.com/questions/6393943/convert-javascript-string-in-dot-notation-into-an-object-reference
+            value={selectedPage}
             >
             <BottomNavigationAction component={Link}  to="/friends"  value="/friends" label="Friends" icon={location=== '/friends' ? <PersonIcon/> : <PersonOutlineIcon/>}/>
             <BottomNavigationAction component={Link}  to="/groups" value="/groups" label="Groups" icon={location === '/groups' ? <PeopleIcon /> : <PeopleOutlinedIcon />} />

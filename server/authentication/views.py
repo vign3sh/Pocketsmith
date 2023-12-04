@@ -34,14 +34,19 @@ class SignupView(APIView):
 
     def post(self, request, format=None):
         data = self.request.data
+
+        if 'username' not in data or 'password' not in data or 're_password' not in data:
+            return Response({ 'error': 'Username and password are required' })
         username = data['username']
         password = data['password']
         re_password  = data['re_password']
-        first_name = data['first_name']
-        last_name = data['last_name']
-        phone = data['phone']
-        email = data['email'] 
-        is_public = data['is_public']
+        first_name = data.get('first_name', '')
+        last_name = data.get('last_name', '')
+        phone = data.get('phone', '')
+        email = data.get('email', '')
+        is_public = data.get('is_public', True)
+        is_staff = data.get('is_staff', False)
+
 
         try:
             if password == re_password:

@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 const drawerWidth = 240;
 const navItems = [['BillBuddy','/friends'], ['StockBuddy','/stockBuddy']];
 
-export default function DrawerAppBar(props,{children}) {
+export default function DrawerAppBar(props) {
 	const { window } = props;
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -50,31 +50,31 @@ export default function DrawerAppBar(props,{children}) {
 	return (
 		<Box sx={{ display: 'flex' }}>
 			<CssBaseline />
-			<AppBar component="nav" position="sticky">
+			<AppBar component="nav" position="sticky" style={{/* background: '#2E3B55' */}}>
 				<Toolbar>
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
 						edge="start"
 						onClick={handleDrawerToggle}
-						sx={{ mr: 2, display: { sm: 'none' } }}
+						sx={{ mr: 2, display: 'block' }}
 					>
 						<MenuIcon />
 					</IconButton>
 					<Typography
 						variant="h6"
 						component="div"
-						sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+						sx={{ flexGrow: 1, display: 'none' }}
 					>
 						PocketSmith
 					</Typography>
-						<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+						{/*<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
 							{navItems.map(([item,link]) => (
 							<Button component={Link}  to={link} key={item} sx={{ color: '#fff' }}>
 								{item}
 							</Button>
 							))}
-						</Box>
+							</Box>*/}
 				</Toolbar>
 			</AppBar>
 			<nav>
@@ -87,7 +87,7 @@ export default function DrawerAppBar(props,{children}) {
 					keepMounted: true, // Better open performance on mobile.
 				}}
 				sx={{
-					display: { xs: 'block', sm: 'none' },
+					display: 'block',
 					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 				}}
 				>
