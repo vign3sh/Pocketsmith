@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from authentication.models import UserProfile
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from django.utils.decorators import method_decorator
-from authentication.seralizers import UserProfileSerializer
+from userprofile.seralizers import FriendSerializer
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -22,7 +22,7 @@ class GetAllPublicUsers(APIView):
             #user_profiles = UserProfile.objects.all()
             # get multiple users from UserProfile
             
-            users_details = UserProfileSerializer(user_profiles, many=True)
+            users_details = FriendSerializer(user_profiles, many=True)
             
             return Response({ 'profiles': users_details.data})
         except:
@@ -44,7 +44,7 @@ class BulkDeleteTestUsers(APIView):
         return Response({ 'success': 'User deleted successfully' })
 
 class GetUsers(APIView):
-    permission_classes = [permissions.AllowAny]
+    #permission_classes = [permissions.AllowAny]
     def get (self, request):
         try:
             
@@ -67,8 +67,50 @@ class GetUsers(APIView):
             #user_profiles = UserProfile.objects.all()
             # get multiple users from UserProfile
             
-            users_details = UserProfileSerializer(user_profiles, many=True)
+            users_details = FriendSerializer(user_profiles, many=True)
             
             return Response({ 'profiles': users_details.data})
         except:
             return Response({ 'error': 'Something went wrong when retrieving profiles' })
+
+class GetFriends(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get (self, request):
+        try:
+            
+            """user = self.request.user
+            user_profile=UserProfile.objects.get(user=user)
+            friends=user_profile.friends.all()
+            friends=FriendSerializer(friends, many=True) 
+            return Response({ 'friends': friends.data})"""
+            friends = [
+                {
+                    "id": 8,
+                    "first_name": "test_user1",
+                    "last_name": "test_user1",
+                    "amount": 8.51,
+                    "pfp": 8
+                },
+                {
+                    "id": 9,
+                    "first_name": "test_user2",
+                    "last_name": "test_user2",
+                    "amount": -56.51,
+                    "pfp": 9
+                },
+                {
+                    "id": 10,
+                    "first_name": "test_user3",
+                    "last_name": "test_user3",
+                    "amount": 200.25
+                },
+                {
+                    "id": 11,
+                    "first_name": "test_user4",
+                    "last_name": "test_user4",
+                    "amount": -6.51
+                }
+            ]
+            return Response({ 'friends': friends})
+        except:
+            return Response({ 'error': 'Something went wrong when retrieving friends' })

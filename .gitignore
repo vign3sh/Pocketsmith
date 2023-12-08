@@ -25,6 +25,7 @@ client/dist-ssr
 client/*.local
 client/.env
 client/dist/*
+client/src/assets/images/*
 
 # Editor directories and files
 server/setupReactRunserver.py

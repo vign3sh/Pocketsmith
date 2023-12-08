@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin', admin.site.urls),
     path('authenticate/', include('authentication.urls')),
     path('user/', include('userprofile.urls')),
-    path('expenses/', include('expenses.urls'))
+    path('expenses/', include('expenses.urls')),
+    path('group/', include('usergroups.urls')),    
 ]
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

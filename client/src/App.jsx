@@ -5,7 +5,7 @@ import {RouterProvider} from "react-router-dom";
 import { getRouter } from "./components/GetRouter";
 
 const App1 = () =>{
-
+    var BACKGROUND_COLOR = "#202020";
     return(
         <Provider store={store}>
             <RouterProvider router={getRouter(store)} />

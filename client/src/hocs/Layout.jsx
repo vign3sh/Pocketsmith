@@ -5,9 +5,12 @@ import { connect } from "react-redux";
 import { checkAuthenticated } from "../actions/auth";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getFriends } from "../actions/friends";
+import { getGroups } from "../actions/groups";
 
-const layout = ({checkAuthenticated}) => {
+const layout = ({checkAuthenticated, getFriends, getGroups}) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    
     useEffect(() => {
         if (isAuthenticated === undefined || isAuthenticated === null){
             checkAuthenticated();
@@ -21,5 +24,5 @@ const layout = ({checkAuthenticated}) => {
     );
 }
 
-export default connect(null, {checkAuthenticated})(layout);
+export default connect(null, {checkAuthenticated, getFriends, getGroups})(layout);
 

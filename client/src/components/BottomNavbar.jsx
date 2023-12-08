@@ -31,11 +31,12 @@ const bottomNavbar = () => {
           <BottomNavigation
             showLabels
             value={selectedPage}
+            sx={{ backgroundColor: 'background.paper' }}
             >
-            <BottomNavigationAction component={Link}  to="/friends"  value="/friends" label="Friends" icon={location=== '/friends' ? <PersonIcon/> : <PersonOutlineIcon/>}/>
-            <BottomNavigationAction component={Link}  to="/groups" value="/groups" label="Groups" icon={location === '/groups' ? <PeopleIcon /> : <PeopleOutlinedIcon />} />
-            <BottomNavigationAction component={Link}  to="/addExpense" state={ { from: location } } value='/addExpense' icon={<AddCircleIcon style={{ fontSize: 40, color:"teal" }} />}/>
-            <BottomNavigationAction component={Link}  to="/activity" value="/activity" label="Activity" icon={location==='/activity' ? <ReceiptIcon/> : <ReceiptOutlinedIcon/>}/>
+            <BottomNavigationAction component={Link}  to="/friends"  value="/friends" label="Friends" icon={selectedPage=== '/friends' ? <PersonIcon/> : <PersonOutlineIcon/>}/>
+            <BottomNavigationAction component={Link}  to="/groups" value="/groups" label="Groups" icon={selectedPage === '/groups' ? <PeopleIcon /> : <PeopleOutlinedIcon />} />
+            <BottomNavigationAction component={Link}  to="/addExpense" state={ { from: selectedPage } } value='/addExpense' icon={<AddCircleIcon style={{ fontSize: 40, color:"teal" }} />}/>
+            <BottomNavigationAction component={Link}  to="/activity" value="/activity" label="Activity" icon={selectedPage==='/activity' ? <ReceiptIcon/> : <ReceiptOutlinedIcon/>}/>
             <BottomNavigationAction component={Link}  to="/account" value="/account" label="Account" icon={<SettingsIcon/>}/>
           
           </BottomNavigation>

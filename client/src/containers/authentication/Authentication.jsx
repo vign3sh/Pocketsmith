@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import backgroundImage from "../../images/backgroundImage.jpg"
+import backgroundImage from "../../assets/images/backgroundImage.jpg"
 import { register,login } from '../../actions/auth';
 import { useSelector, connect } from 'react-redux';
 import { useNavigate } from "react-router-dom"
