@@ -1,43 +1,24 @@
 import React from "react";
-import { useSelector, connect } from "react-redux";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Cards from "../../components/Cards";
-import { getGroups } from "../../actions/groups";
 
-const groups = ({getGroups}) => {
+const groups = () => {
     let groups = useSelector((state) => state.bill.groups);
     let groupsLoaded = useSelector((state) => state.bill.groupsLoaded);
-    useEffect(() => {
+    /*useEffect(() => {
       if(!groupsLoaded){
           getGroups();
       }
-    },[]);
+    },[]);*/
 
-    /*
-    const [imageList, setImageList] = useState([]);
-
-    useEffect(() => {
-        const loadImages = async () => {
-          const importAll = import.meta.glob("/src/assets/images/userProfile/128x128//*.png");
-          const images = [];
-          for (const path in importAll) {
-            const image = await importAll[path]();
-            images.push(image.default);
-          }
-          setImageList(images);
-          
-        };
-        loadImages();
-      }, []);
-      */
     
     const showGroups = (groups) => {
-        return <Cards data={groups} componentType={'groups'} loaded={groupsLoaded}/>;       
+        return <Cards data={groups} componentType={'groups'} loaded={groupsLoaded} aws_link="https://pocketsmith.s3.us-east-2.amazonaws.com/images/groupAvatar/"/>;       
     }
 
     return(<>
         {showGroups(groups)}
     </>);
 }
-export default connect(null, {getGroups})(groups);
+export default groups;
 

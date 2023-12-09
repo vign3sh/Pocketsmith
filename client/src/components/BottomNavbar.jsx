@@ -25,19 +25,15 @@ const bottomNavbar = () => {
       
         
         <Paper
-          elevation={3}
+          elevation={4}
           sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 2 }}
         >
-          <BottomNavigation
-            showLabels
-            value={selectedPage}
-            sx={{ backgroundColor: 'background.paper' }}
-            >
-            <BottomNavigationAction component={Link}  to="/friends"  value="/friends" label="Friends" icon={selectedPage=== '/friends' ? <PersonIcon/> : <PersonOutlineIcon/>}/>
-            <BottomNavigationAction component={Link}  to="/groups" value="/groups" label="Groups" icon={selectedPage === '/groups' ? <PeopleIcon /> : <PeopleOutlinedIcon />} />
-            <BottomNavigationAction component={Link}  to="/addExpense" state={ { from: selectedPage } } value='/addExpense' icon={<AddCircleIcon style={{ fontSize: 40, color:"teal" }} />}/>
-            <BottomNavigationAction component={Link}  to="/activity" value="/activity" label="Activity" icon={selectedPage==='/activity' ? <ReceiptIcon/> : <ReceiptOutlinedIcon/>}/>
-            <BottomNavigationAction component={Link}  to="/account" value="/account" label="Account" icon={<SettingsIcon/>}/>
+          <BottomNavigation showLabels value={selectedPage} style={{background: '#202020'}}>
+            <BottomNavigationAction style={{color:'white'}} component={Link}  to="/friends"  value="/friends" label="Friends" icon={selectedPage=== '/friends' ? <PersonIcon/> : <PersonOutlineIcon/>}/>
+            <BottomNavigationAction style={{color:'white'}} component={Link}  to="/groups" value="/groups" label="Groups" icon={selectedPage === '/groups' ? <PeopleIcon /> : <PeopleOutlinedIcon />} />
+            <BottomNavigationAction style={{color:'white'}} component={Link}  to="/addExpense" state={ { from: selectedPage } } value='/addExpense' icon={<AddCircleIcon style={{ fontSize: 40 }} />}/>
+            <BottomNavigationAction style={{color:'white'}} component={Link}  to="/activity" value="/activity" label="Activity" icon={selectedPage==='/activity' ? <ReceiptIcon/> : <ReceiptOutlinedIcon/>}/>
+            <BottomNavigationAction style={{color:'white'}} component={Link}  to="/account" value="/account" label="Account" icon={<SettingsIcon/>}/>
           
           </BottomNavigation>
         </Paper>

@@ -23,7 +23,7 @@ class GetGroups(APIView):
                             "grp_name": "Test Group 1",
                             "description": "test group",
                             "amount": -100,
-                            "pfp": 1
+                            "pfp": 5
                         }
                     ]
             return Response({ 'groups': groups})

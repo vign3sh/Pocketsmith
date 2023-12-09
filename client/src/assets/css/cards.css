@@ -5,9 +5,7 @@
 }
 .card:hover,
 .card:focus-within {
-  transform: scale(1.06);
-  border-color: black;
-
+  transform: scale(1.05);
 }
 .cardGrid{
     width:100%;
@@ -16,6 +14,7 @@
 
 .cardAvatar{
     max-width:75px;
+    border-radius: 50%;
 }
 
 .cardDetails{

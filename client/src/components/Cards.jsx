@@ -2,10 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {Card, Box, Grid,Typography} from '@mui/material';
 import '../assets/css/Cards.css';
-import userPfp from '../assets/images/userProfile/128x128/128_01.png';
 
 
-const cards = ({data, componentType, loaded}) => {
+const cards = ({data, componentType, loaded, aws_link}) => {
     //check if friends is undefined
     if (!data || !loaded) {
         return (<div></div>)
@@ -30,17 +29,18 @@ const cards = ({data, componentType, loaded}) => {
                 {data.map(({id, first_name, last_name, grp_name, pfp, amount, description},i) =>{
                     amount=roundAmount(amount);
                     first_name=first_name?setFriendName(first_name,last_name):first_name;
+                    pfp=pfp? pfp: i%5;
                     //const randomImageIndex = Math.floor(Math.random() * imageList.length);
                     //const randomImageIndex = i%imageList.length;
                     return (
                         
                         <Grid item xs={12} sm={6} md={4} key={id} component={Link}  to={`/${componentType}/${id}`} style={{ textDecoration: "none"}}> 
-                            <Card className='card' variant="outlined">
+                            <Card className='card' variant="outlined" sx={{ "&:hover": {borderColor:(amount===0 || !amount)?"yellow":amount>0?"green":"red", borderBlockWidth:"1px"},}}>
                                 <Box className="cardGrid">
                                         <Box >
                                             {/*<img className="cardAvatar" src={pfp?imageList[pfp]:imageList[randomImageIndex]}
                                                 style={{}}/>*/}
-                                                <img className="cardAvatar" src={userPfp}
+                                                <img className="cardAvatar" src={`${aws_link}${pfp}.png`}
                                                 style={{}}/>
                                         </Box>
                                         
@@ -50,7 +50,7 @@ const cards = ({data, componentType, loaded}) => {
                                             </Typography>
                                             
                                             {description
-                                                ? <Typography variant="body2" color="text.secondary">
+                                                ? <Typography variant="body2" color="text.secondary" sx={{ marginLeft:"5px"}}>
                                                     {description}
                                                 </Typography>
                                                 : ""
