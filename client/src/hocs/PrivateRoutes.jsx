@@ -1,11 +1,25 @@
 import React, { Fragment, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import LoadingScreen from '../components/LoadingScreen';
 import BottomNavbar from '../components/BottomNavbar';
 import DrawerAppBar from '../components/DrawerAppBar';
-const PrivateRoutes = ({children, bottomBar=true}) => {
+import { getFriends } from "../actions/friends";
+import { getGroups } from "../actions/groups";
+const PrivateRoutes = ({children, bottomBar=true, getFriends, getGroups}) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    let friendsLoaded = useSelector((state) => state.bill.friendsLoaded);
+    let groupsLoaded = useSelector((state) => state.bill.groupsLoaded);
+
+    
+    useEffect(() => {
+            if(!friendsLoaded){
+                getFriends();
+            }
+            if(!groupsLoaded){
+                getGroups();
+            }
+    },[]);
 
     return(<div>
         { (isAuthenticated === undefined || isAuthenticated === null)  ? (
@@ -29,4 +43,4 @@ const PrivateRoutes = ({children, bottomBar=true}) => {
       
 };
 
-export default PrivateRoutes;
+export default connect(null, {getFriends, getGroups})(PrivateRoutes);

@@ -10,18 +10,20 @@ import { getGroups } from "../actions/groups";
 
 const layout = ({checkAuthenticated, getFriends, getGroups}) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    let friendsLoaded = useSelector((state) => state.bill.friendsLoaded);
-    let groupsLoaded = useSelector((state) => state.bill.groupsLoaded);
+    /*let friendsLoaded = useSelector((state) => state.bill.friendsLoaded);
+    let groupsLoaded = useSelector((state) => state.bill.groupsLoaded);*/
     
     useEffect(() => {
         if (isAuthenticated === undefined || isAuthenticated === null){
             checkAuthenticated();
+            /*
             if(!friendsLoaded){
                 getFriends();
             }
             if(!groupsLoaded){
                 getGroups();
             }
+            */
         }
         
     });
