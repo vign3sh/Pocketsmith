@@ -21,9 +21,33 @@ class GetGroups(APIView):
                         {
                             "id": 1,
                             "grp_name": "Test Group 1",
-                            "description": "test group",
+                            "description": "test group 1",
                             "amount": -100,
                             "pfp": 5
+                        },
+                        {
+                            "id": 2,
+                            "grp_name": "Test Group 2",
+                            "description": "test group 2",
+                            "amount": 19.5,
+                        },
+                        {
+                            "id": 3,
+                            "grp_name": "Test Group 3",
+                            "description": "test group 3",
+                            "amount": -65.35,
+                        },
+                        {
+                            "id": 4,
+                            "grp_name": "Test Group 4",
+                            "description": "test group 4",
+                            "amount": 0,
+                        },
+                        {
+                            "id": 5,
+                            "grp_name": "Test Group 5",
+                            "description": "test group 5",
+                            "amount": 150,
                         }
                     ]
             return Response({ 'groups': groups})

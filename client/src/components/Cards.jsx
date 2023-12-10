@@ -4,13 +4,13 @@ import {Card, Box, Grid,Typography} from '@mui/material';
 import '../assets/css/Cards.css';
 
 
-const cards = ({data, componentType, loaded, aws_link}) => {
+const cards = ({data, componentType, loaded, aws_link, noCards}) => {
     //check if friends is undefined
     if (!data || !loaded) {
         return (<div></div>)
     }
     if ( data.length===0 ) {
-        return (<div>New to App! Add an expense/group and see friends ove here!!</div>)
+        return (<div>New to App! {noCards}</div>)
     }
         
 
@@ -29,13 +29,13 @@ const cards = ({data, componentType, loaded, aws_link}) => {
                 {data.map(({id, first_name, last_name, grp_name, pfp, amount, description},i) =>{
                     amount=roundAmount(amount);
                     first_name=first_name?setFriendName(first_name,last_name):first_name;
-                    pfp=pfp? pfp: i%5;
+                    pfp=pfp? pfp: i%16;
                     //const randomImageIndex = Math.floor(Math.random() * imageList.length);
                     //const randomImageIndex = i%imageList.length;
                     return (
                         
                         <Grid item xs={12} sm={6} md={4} key={id} component={Link}  to={`/${componentType}/${id}`} style={{ textDecoration: "none"}}> 
-                            <Card className='card' variant="outlined" sx={{ "&:hover": {borderColor:(amount===0 || !amount)?"yellow":amount>0?"green":"red", borderBlockWidth:"1px"},}}>
+                            <Card className='card' variant="outlined" sx={{ "&:hover": {borderColor:(amount===0 || !amount)?"orange":amount>0?"green":"red", borderBlockWidth:"1px"},}}>
                                 <Box className="cardGrid">
                                         <Box >
                                             {/*<img className="cardAvatar" src={pfp?imageList[pfp]:imageList[randomImageIndex]}
@@ -57,8 +57,9 @@ const cards = ({data, componentType, loaded, aws_link}) => {
                                             }
 
                                         </Box>
-                                        <Box className="cardAmount" color={(amount===0 || !amount)?"yellow":amount>0?"green":"red"}>
-                                            <Typography variant="body2">
+                                        <Box className="cardAmount" color={(amount===0 || !amount)?"orange":amount>0?"green":"red"}>
+                                            
+                                            <Typography variant={(amount===0 || !amount)?"body1":"body2"}>
                                                     {(amount===0 || !amount)
                                                     ? "All settled"
                                                     :amount>0

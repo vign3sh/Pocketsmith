@@ -43,7 +43,7 @@ class BulkDeleteTestUsers(APIView):
                 return Response({ 'error': 'Something went wrong when trying to delete user' })
         return Response({ 'success': 'User deleted successfully' })
 
-class GetUsers(APIView):
+class AddUsers(APIView):
     #permission_classes = [permissions.AllowAny]
     def get (self, request):
         try:
@@ -74,7 +74,7 @@ class GetUsers(APIView):
             return Response({ 'error': 'Something went wrong when retrieving profiles' })
 
 class GetFriends(APIView):
-    permission_classes = [permissions.AllowAny]
+    #permission_classes = [permissions.AllowAny]
     def get (self, request):
         try:
             

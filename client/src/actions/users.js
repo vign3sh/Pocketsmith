@@ -17,7 +17,7 @@ export const GetSearchedUsers = async(search) => {
     try {
 
         
-        const search_url="/user/getUsers";
+        const search_url="/user/addUsers";
         const res = await axios.get(search_url, config);
         // JSON.stringify(res.data)
         const data=res.data;
