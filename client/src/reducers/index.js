@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
-import bill from './bill';
+import friends from './friends';
+import groups from './groups';
 
 export default combineReducers({
     auth,
-    bill
+    friends,
+    groups
 });

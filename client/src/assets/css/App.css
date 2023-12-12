@@ -2,3 +2,6 @@
     --main-bg-color: 32, 32, 32;
   }
 
+  .selectFilter>fieldset{
+    border:none !important
+  }

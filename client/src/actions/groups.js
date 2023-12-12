@@ -2,7 +2,8 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import {
     GROUPS_SUCCESS,
-    GROUPS_FAIL
+    GROUPS_FAIL,
+    FILTER_GROUPS
 } from './types';
 
 export const getGroups = () => async dispatch => {
@@ -37,4 +38,14 @@ export const getGroups = () => async dispatch => {
             type: GROUPS_FAIL
         });
     }
+};
+
+
+
+export const filterGroups = (groupsFilter) => async dispatch => {
+    console.log("updated filters");
+    dispatch({
+        type: FILTER_GROUPS,
+        payload: groupsFilter
+    });
 };

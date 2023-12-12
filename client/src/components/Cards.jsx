@@ -2,34 +2,35 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {Card, Box, Grid,Typography} from '@mui/material';
 import '../assets/css/Cards.css';
+import { roundAmount } from "../utils/utils";
 
 
-const cards = ({data, componentType, loaded, aws_link, noCards}) => {
-    //check if friends is undefined
+
+const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => {
+
     if (!data || !loaded) {
         return (<div></div>)
     }
     if ( data.length===0 ) {
-        return (<div>New to App! {noCards}</div>)
+        if(total_data.length===0){
+            return (<div>New to App! {noCards}</div>);            
+        }
+        return (<div>No {componentType} with filters found</div>);
     }
         
 
     // Round amount to 2 decimal places if needed
-    const roundAmount = (amount) => {
-        amount=amount.toPrecision(4);
-        amount=Math.round((amount) * 100) / 100;
-        return amount;
-    }
+    
 
     const setFriendName = (first, last) => {
         return first.charAt(0).toUpperCase() + first.slice(1) + " " + last.charAt(0).toUpperCase();
     }
    
-    return (<Grid container spacing={{xs:2}} style={{marginTop: "25px" }} padding={{xs:2,sm:4}}>
+    return (<Grid container spacing={{xs:2}} padding={{xs:2,sm:4}}>
                 {data.map(({id, first_name, last_name, grp_name, pfp, amount, description},i) =>{
                     amount=roundAmount(amount);
                     first_name=first_name?setFriendName(first_name,last_name):first_name;
-                    pfp=pfp? pfp: i%16;
+                    pfp=pfp? pfp: i+1%16;
                     //const randomImageIndex = Math.floor(Math.random() * imageList.length);
                     //const randomImageIndex = i%imageList.length;
                     return (
@@ -62,9 +63,13 @@ const cards = ({data, componentType, loaded, aws_link, noCards}) => {
                                             <Typography variant={(amount===0 || !amount)?"body1":"body2"}>
                                                     {(amount===0 || !amount)
                                                     ? "All settled"
-                                                    :amount>0
-                                                    ? "You owe "
-                                                    : "Owes you "}
+                                                    :
+                                                    (
+                                                        amount>0
+                                                        ? "Owes you "
+                                                        : "You owe "
+                                                    )
+                                                    }
                                             </Typography>
                                             <Typography gutterBottom variant="h6" component="div">
                                                     {amount===0 || !amount? "":amount>0? `$${amount}`: `$${-amount}`}

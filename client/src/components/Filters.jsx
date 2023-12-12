@@ -1,21 +1,193 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
+import { Box, TextField, Select, MenuItem, FormControl, Typography, Hidden } from '@mui/material';
+import debounce from 'lodash.debounce';
+import { useEffect, useMemo, useState } from 'react';
+import {ExpandMoreRounded as ExpandMoreRoundedIcon, AddCircle as AddCircleIcon} from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { roundAmount } from '../utils/utils';
 
-export class Filters extends Component {
-  static propTypes = {
-    second: third
-  }
 
-  render() {
+
+
+/*
+const useStyles = makeStyles(() => ({
+    formControl: {
+      "& .MuiInputBase-root": {
+        color: "#6EC177",
+        borderColor: "#6EC177",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderRadius: "100px",
+        minWidth: "120px",
+        justifyContent: "center"
+      },
+      "& .MuiSelect-select.MuiSelect-select": {
+        paddingRight: "0px"
+      }
+    },
+    select: {
+      width: "auto",
+      fontSize: "12px",
+      "&:focus": {
+        backgroundColor: "transparent"
+      }
+    },
+    selectIcon: {
+      position: "relative",
+      color: "#6EC177",
+      fontSize: "14px"
+    },
+    paper: {
+      borderRadius: 12,
+      marginTop: 8
+    },
+    list: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      "& li": {
+        fontWeight: 200,
+        paddingTop: 8,
+        paddingBottom: 8,
+        fontSize: "12px"
+      },
+      "& li.Mui-selected": {
+        color: "white",
+        background: "#6EC177"
+      },
+      "& li.Mui-selected:hover": {
+        background: "#6EC177"
+      }
+    }
+  }));
+  */
+export const Filters = ({selectedFilters, items, filterType, handleFilters, handleSearch, data}) => {
+
+    let total_amount=0;
+    total_amount=data.reduce((acc, curr) => acc + curr.amount, 0);
+    total_amount=roundAmount(total_amount);
+    let amount_color=total_amount===0?"orange":(total_amount>0?"green":"red");
+    let amount_span=(<Typography variant="span" sx={{ color:`${amount_color}`}}>${Math.abs(total_amount)}</Typography>);
+    const selectColor = "#6EC177";
+
+    const selectedFilter= selectedFilters['filters']?selectedFilters['filters']:'';
+    const searchTerm = selectedFilters['searchTerm']?selectedFilters['searchTerm']:'';
+    
+    //const searchTerm = filters['searchTerm']?friendsfilters['searchTerm']:'';
+
+    
+
+    const [search, setSearch] = useState(searchTerm);
+    
+    const updateSearch = (e) => {
+        setSearch(e.target.value);
+        debouncedResults(e);
+    }
+        const debouncedResults = useMemo(() => {
+        return debounce(handleSearch, 1000);
+    }, []);
+
     return (
-      <div>Filters</div>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent:{xs: "center", sm: "space-between"}, mt:"10px"}}>
+
+            <Typography gutterBottom variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' }, pl:3, mb:"0px"}}>
+                {
+                total_amount===0?
+                "All Settled":
+                    total_amount>0
+                    ?"You are Owed: "
+                    :"You Owe: "
+                }
+                {total_amount===0?
+                null:amount_span}
+            </Typography>
+            
+
+            <Box sx={{display: 'flex', alignItems: 'center', justifyContent:{xs: "space-between", sm: "center"} , mx: "10px", width:{xs: "100%", sm:"auto"} }}>
+                <TextField
+                    label="Search"
+                    type="text"
+                    value={search}
+                    onChange={updateSearch} 
+                    style={{maxWidth: "150px"}}
+                />
+                <Box sx={{ display: "flex", alignItems: "center"}}>
+                    <FormControl
+                        sx={{
+                            '& .MuiInputBase-root:underline:hover:before':
+                            {
+                                border: 'none !important',
+                                outline: 'none !important'
+                            },
+                            "& .MuiInputBase-root": {
+                                color: `${selectColor}!important`,
+                                borderColor: `${selectColor}!important`,
+                                borderWidth: "1px",
+                                borderStyle: "solid",
+                                borderRadius: "100px",
+                                minWidth: "140px",
+                                justifyContent: "center",
+                                margin: "10px",                        
+                            },
+                            
+
+                            "& .MuiSelect-select.MuiSelect-select": {
+                            paddingRight: "12px!important",
+                            paddingLeft: "0px!important",
+                            width: 'min-content'
+                            }
+                        }}
+                        >
+                        <Select
+                            className='selectFilter'
+                            value={selectedFilter}
+                            onChange={handleFilters}
+                            IconComponent={ExpandMoreRoundedIcon}
+                            sx={{
+                                fontSize: "12px"
+                            }}
+                            
+                            MenuProps={{
+                                PaperProps: {
+                                sx: {
+                                    bgcolor: 'white',
+                                    borderRadius: "12px",
+                                    mx: '10px',
+                                    '& .MuiMenuItem-root': {
+                                        padding: 2,
+                                        fontWeight: "200",
+                                        paddingTop: "8px",
+                                        paddingBottom: "8px",
+                                        fontSize: "12px",
+                                        justifyContent: "center"
+                                    },
+                                    '& .Mui-selected': {
+                                        bgcolor: `${selectColor}!important`,
+                                        color: 'white'
+                                    },
+                                },
+                                },
+                            
+                                
+                            }}
+                        >
+                            {items.map((item) => (
+                            <MenuItem key={item.key} value={item.value}>
+                                {item.key}
+                            </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <Box style={{ textDecoration: "none", color:`${selectColor}`, height:"45px" }} component={Link}  to={`/${filterType}/add`} >
+                        <AddCircleIcon style={{ fontSize: "45px" }} />
+                    </Box>
+                </Box>
+                
+                
+            </Box>
+                {/*getUsers()*/}
+        </Box>
     )
-  }
 }
 
-const mapStateToProps = (state) => ({})
-
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filters)
+export default Filters;

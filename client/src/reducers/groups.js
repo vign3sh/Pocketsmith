@@ -1,31 +1,21 @@
 import {
-    FRIENDS_SUCCESS,
-    FRIENDS_FAIL,
     GROUPS_SUCCESS,
-    GROUPS_FAIL
+    GROUPS_FAIL,
+    FILTER_GROUPS
 } from '../actions/types';
 
 const initialState = {
-    friends: [],
-    friendsLoaded: false,
     groups: [],
-    groupsLoaded: false
+    groupsLoaded: false,
+    groupsFilters: {
+        searchTerm:"",
+        filters: 1
+    },
 };
 
 export default function(state = initialState, action) {
     const { type, payload } = action;
     switch(type) {
-        case FRIENDS_SUCCESS:
-            return {
-                ...state,
-                friends: payload,
-                friendsLoaded: true,
-            }
-        case FRIENDS_FAIL:
-            return {
-                ...state,
-                friends: []
-            }
         case GROUPS_SUCCESS:
             return {
                 ...state,
@@ -37,7 +27,13 @@ export default function(state = initialState, action) {
                 ...state,
                 groups: []
             }
+        case FILTER_GROUPS:
+            return {
+                ...state,
+                groupsFilters: payload,
+            }
         default:
             return state
     };
 };
+

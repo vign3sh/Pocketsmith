@@ -8,8 +8,8 @@ import { getFriends } from "../actions/friends";
 import { getGroups } from "../actions/groups";
 const PrivateRoutes = ({children, bottomBar=true, getFriends, getGroups}) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    let friendsLoaded = useSelector((state) => state.bill.friendsLoaded);
-    let groupsLoaded = useSelector((state) => state.bill.groupsLoaded);
+    let friendsLoaded = useSelector((state) => state.friends.friendsLoaded);
+    let groupsLoaded = useSelector((state) => state.groups.groupsLoaded);
 
     
     useEffect(() => {
