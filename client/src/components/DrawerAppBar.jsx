@@ -50,7 +50,7 @@ export default function DrawerAppBar(props) {
 	return (
 		<Box sx={{ display: 'flex' }}>
 			<CssBaseline />
-			<AppBar component="nav" position="sticky" style={{ background: '#202020' }}>
+			<AppBar component="nav" position="sticky" style={{ background: "linear-gradient(to right, var(--main-bg-color), var(--secondary-bg-color))" }}>
 				<Toolbar>
 					<IconButton
 						color="inherit"

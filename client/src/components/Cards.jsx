@@ -36,7 +36,8 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
                     return (
                         
                         <Grid item xs={12} sm={6} md={4} key={id} component={Link}  to={`/${componentType}/${id}`} style={{ textDecoration: "none"}}> 
-                            <Card className='card' variant="outlined" sx={{ "&:hover": {borderColor:(amount===0 || !amount)?"orange":amount>0?"green":"red", borderBlockWidth:"1px"},}}>
+                            <Card className='card' variant="outlined" sx={{ ':hover': {boxShadow: 20,}}}>
+                                {/*"&:hover": {borderColor:(amount===0 || !amount)?"orange":amount>0?"green":"red", borderBlockWidth:"1px", },}}>*/}
                                 <Box className="cardGrid">
                                         <Box >
                                             {/*<img className="cardAvatar" src={pfp?imageList[pfp]:imageList[randomImageIndex]}
@@ -58,7 +59,7 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
                                             }
 
                                         </Box>
-                                        <Box className="cardAmount" color={(amount===0 || !amount)?"orange":amount>0?"green":"red"}>
+                                        <Box className="cardAmount" color={(amount===0 || !amount)?"var(--neutral-color)":amount>0?"var(--positive-color)":"var(--negative-color)"}>
                                             
                                             <Typography variant={(amount===0 || !amount)?"body1":"body2"}>
                                                     {(amount===0 || !amount)
@@ -71,8 +72,8 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
                                                     )
                                                     }
                                             </Typography>
-                                            <Typography gutterBottom variant="h6" component="div">
-                                                    {amount===0 || !amount? "":amount>0? `$${amount}`: `$${-amount}`}
+                                            <Typography gutterBottom variant="h6" component="div" sx={{ display:`${(amount===0 || !amount)?"none":"flex"}` }}>
+                                                    {amount>0? `$${amount}`: `$${-amount}`}
                                             </Typography>
                                         </Box>
                                     </Box>

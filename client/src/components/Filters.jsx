@@ -1,81 +1,50 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import { Box, TextField, Select, MenuItem, FormControl, Typography, Hidden } from '@mui/material';
+import { Box, TextField, Select, MenuItem, FormControl, Typography } from '@mui/material';
 import debounce from 'lodash.debounce';
 import { useEffect, useMemo, useState } from 'react';
-import {ExpandMoreRounded as ExpandMoreRoundedIcon, AddCircle as AddCircleIcon} from '@mui/icons-material';
+import {ExpandMoreRounded as ExpandMoreRoundedIcon, GroupAddOutlined as GroupAddOutlinedIcon, PersonAddAltOutlined as PersonAddAltOutlinedIcon} from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { roundAmount } from '../utils/utils';
+import styled from "styled-components";
 
 
-
-
-/*
-const useStyles = makeStyles(() => ({
-    formControl: {
-      "& .MuiInputBase-root": {
-        color: "#6EC177",
-        borderColor: "#6EC177",
-        borderWidth: "1px",
-        borderStyle: "solid",
-        borderRadius: "100px",
-        minWidth: "120px",
-        justifyContent: "center"
-      },
-      "& .MuiSelect-select.MuiSelect-select": {
-        paddingRight: "0px"
-      }
-    },
-    select: {
-      width: "auto",
-      fontSize: "12px",
-      "&:focus": {
-        backgroundColor: "transparent"
-      }
-    },
-    selectIcon: {
-      position: "relative",
-      color: "#6EC177",
-      fontSize: "14px"
-    },
-    paper: {
-      borderRadius: 12,
-      marginTop: 8
-    },
-    list: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      "& li": {
-        fontWeight: 200,
-        paddingTop: 8,
-        paddingBottom: 8,
-        fontSize: "12px"
-      },
-      "& li.Mui-selected": {
-        color: "white",
-        background: "#6EC177"
-      },
-      "& li.Mui-selected:hover": {
-        background: "#6EC177"
-      }
+const CustomBorderTextField = styled(TextField)`
+    & .MuiOutlinedInput-root {
+        
+        border-radius: 100px;
+        fieldset {
+            border-color: var(--main-bg-color); 
+        }
+        &:hover fieldset {
+            border-color: var(--secondary-bg-color);
+        }
+        &.Mui-focused fieldset {
+            border-color: var(--secondary-bg-color); 
+        }
     }
-  }));
-  */
+    label {
+        color: var(--main-bg-color);
+    }
+    &:hover label {
+        color: var(--secondary-bg-color);
+    }
+    label.Mui-focused{
+        color: var(--secondary-bg-color);
+    }
+    
+`;
+
 export const Filters = ({selectedFilters, items, filterType, handleFilters, handleSearch, data}) => {
 
     let total_amount=0;
     total_amount=data.reduce((acc, curr) => acc + curr.amount, 0);
     total_amount=roundAmount(total_amount);
-    let amount_color=total_amount===0?"orange":(total_amount>0?"green":"red");
+    let amount_color=total_amount===0?"var(--main-bg-color)":(total_amount>0?"var(--main-bg-color)":"var(--main-bg-color)");
     let amount_span=(<Typography variant="span" sx={{ color:`${amount_color}`}}>${Math.abs(total_amount)}</Typography>);
-    const selectColor = "#6EC177";
+
 
     const selectedFilter= selectedFilters['filters']?selectedFilters['filters']:'';
     const searchTerm = selectedFilters['searchTerm']?selectedFilters['searchTerm']:'';
-    
-    //const searchTerm = filters['searchTerm']?friendsfilters['searchTerm']:'';
-
-    
 
     const [search, setSearch] = useState(searchTerm);
     
@@ -90,7 +59,7 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent:{xs: "center", sm: "space-between"}, mt:"10px"}}>
 
-            <Typography gutterBottom variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' }, pl:3, mb:"0px"}}>
+            <Typography gutterBottom variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' }, pl:3, mb:"0px", fontSize: "24px"}}>
                 {
                 total_amount===0?
                 "All Settled":
@@ -104,47 +73,50 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
             
 
             <Box sx={{display: 'flex', alignItems: 'center', justifyContent:{xs: "space-between", sm: "center"} , mx: "10px", width:{xs: "100%", sm:"auto"} }}>
-                <TextField
-                    label="Search"
-                    type="text"
-                    value={search}
-                    onChange={updateSearch} 
-                    style={{maxWidth: "150px"}}
-                />
+                <CustomBorderTextField
+                label="Search"
+                type="text"
+                value={search}
+                onChange={updateSearch} 
+                style={{maxWidth: "160px"}}/>
+
                 <Box sx={{ display: "flex", alignItems: "center"}}>
                     <FormControl
                         sx={{
-                            '& .MuiInputBase-root:underline:hover:before':
-                            {
-                                border: 'none !important',
-                                outline: 'none !important'
-                            },
                             "& .MuiInputBase-root": {
-                                color: `${selectColor}!important`,
-                                borderColor: `${selectColor}!important`,
+                                color: `var(--main-bg-color)!important`,
+                                borderColor: `var(--main-bg-color)!important`,
                                 borderWidth: "1px",
                                 borderStyle: "solid",
                                 borderRadius: "100px",
-                                minWidth: "140px",
+                                minWidth: "130px",
                                 justifyContent: "center",
-                                margin: "10px",                        
+                                margin: "10px",                  
                             },
-                            
 
-                            "& .MuiSelect-select.MuiSelect-select": {
-                            paddingRight: "12px!important",
-                            paddingLeft: "0px!important",
-                            width: 'min-content'
+                            "fieldset":{
+                                borderColor: `var(--main-bg-color)!important`,
+                                borderWidth: "1px",
+                            },
+
+                            ".MuiSvgIcon-root": {    
+                                color: `var(--main-bg-color)!important`,
+                            },
+                            ".MuiSelect-select": {
+                                paddingRight: "12px!important",
+                                paddingLeft: "0px!important",
+                                width: 'min-content',
                             }
                         }}
                         >
                         <Select
-                            className='selectFilter'
+                            className='removeBoundary'
                             value={selectedFilter}
                             onChange={handleFilters}
                             IconComponent={ExpandMoreRoundedIcon}
                             sx={{
-                                fontSize: "12px"
+                                fontSize: "14px",
+                                textAlign: "center",
                             }}
                             
                             MenuProps={{
@@ -152,7 +124,7 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
                                 sx: {
                                     bgcolor: 'white',
                                     borderRadius: "12px",
-                                    mx: '10px',
+                                    width: "120px",
                                     '& .MuiMenuItem-root': {
                                         padding: 2,
                                         fontWeight: "200",
@@ -162,7 +134,7 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
                                         justifyContent: "center"
                                     },
                                     '& .Mui-selected': {
-                                        bgcolor: `${selectColor}!important`,
+                                        bgcolor: `var(--main-bg-color)!important`,
                                         color: 'white'
                                     },
                                 },
@@ -178,8 +150,8 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
                             ))}
                         </Select>
                     </FormControl>
-                    <Box style={{ textDecoration: "none", color:`${selectColor}`, height:"45px" }} component={Link}  to={`/${filterType}/add`} >
-                        <AddCircleIcon style={{ fontSize: "45px" }} />
+                    <Box style={{ textDecoration: "none", color:`var(--main-bg-color)`, height:"45px" }} component={Link}  to={`/${filterType}/add`} >
+                        {filterType=='friends'?<PersonAddAltOutlinedIcon style={{ fontSize: "45px" }} />:<GroupAddOutlinedIcon style={{ fontSize: "45px" }} />}
                     </Box>
                 </Box>
                 

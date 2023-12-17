@@ -1,7 +1,10 @@
 :root {
-    --main-bg-color: 32, 32, 32;
+    --main-bg-color: #B12F7C;
+    --secondary-bg-color: #EA6676;
+    --nav-bg-color: white;
+    --positive-color: #2ECC71;
+    --negative-color: #E74C3C;
+    --neutral-color: #F1C40F;
   }
 
-  .selectFilter>fieldset{
-    border:none !important
-  }
+ 
