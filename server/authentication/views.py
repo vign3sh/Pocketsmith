@@ -15,12 +15,13 @@ class CheckAuthenticatedView(APIView):
     permission_classes = (permissions.AllowAny,)
     def get(self, request, format=None):
         user = self.request.user
+        #return Response({ 'isAuthenticated': 'success', 'first_name':'vignesh', 'last_name':'singh', 'phone':'8899', 'email':'vrs'})
 
         try:
             isAuthenticated = user.is_authenticated
-
+            userProfile=UserProfile.objects.get(user_id=user.id)
             if isAuthenticated:
-                return Response({ 'isAuthenticated': 'success' })
+                return Response({ 'isAuthenticated': 'success', 'first_name':userProfile.first_name, 'last_name':userProfile.last_name, 'phone':userProfile.phone, 'email':userProfile.email})
             else:
                 return Response({ 'isAuthenticated': 'error' })
         except:
@@ -83,10 +84,8 @@ class LoginView(APIView):
             
             if user is not None:
                 auth.login(request, user)
-                if not user.is_staff:
-                    userProfile=UserProfile.objects.get(user_id=user.id)
-                    return Response({ 'success': 'User authenticated', 'first_name':userProfile.first_name})
-                return Response({ 'success': 'User authenticated', 'first_name':user.first_name})
+                userProfile=UserProfile.objects.get(user_id=user.id)
+                return Response({ 'success': 'User authenticated', 'first_name':userProfile.first_name, 'last_name':userProfile.last_name, 'phone':userProfile.phone, 'email':userProfile.email})
                     
 
             else:

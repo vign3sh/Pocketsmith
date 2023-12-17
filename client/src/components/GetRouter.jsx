@@ -6,11 +6,15 @@ import AutenticationRoutes from "../hocs/AuthenticationRoutes";
 import Authentication from "../containers/authentication/Authentication";
 import Friends from "../containers/friends/Friends";
 import FriendsProfile from "../containers/friends/FriendsProfile";
+import AddFriends from "../containers/friends/AddFriends";
 import Groups from "../containers/groups/Groups";
 import AddExpense from "../containers/addExpense/AddExpense";
 import Activity from "../containers/activity/Activity";
 import Account from "../containers/account/Account";
 import Pending from "../containers/stockBuddy/Pending";
+import AddGroups from "../containers/groups/AddGroups";
+import GroupsProfile from "../containers/groups/GroupsProfile";
+
 
 
 
@@ -39,12 +43,24 @@ export function getRouter(store) {
                     element:<PrivateRoutes><Friends/></PrivateRoutes>,
                 },
                 {
+                    path: "/friendsadd",
+                    element:<PrivateRoutes><AddFriends/></PrivateRoutes>,
+                },
+                {
                     path: "/friends/:id",
                     element:<PrivateRoutes><FriendsProfile/></PrivateRoutes>,
                 },
                 {
                     path: "/groups",
                     element:<PrivateRoutes><Groups/></PrivateRoutes>,
+                },
+                {
+                    path: "/groupsadd",
+                    element:<PrivateRoutes><AddGroups/></PrivateRoutes>,
+                },
+                {
+                    path: "/groups/:id",
+                    element:<PrivateRoutes><GroupsProfile/></PrivateRoutes>,
                 },
                 {
                     path: "/activity",

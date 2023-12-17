@@ -74,7 +74,7 @@ class AddUsers(APIView):
             return Response({ 'error': 'Something went wrong when retrieving profiles' })
 
 class GetFriends(APIView):
-    #permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]
     def get (self, request):
         try:
             

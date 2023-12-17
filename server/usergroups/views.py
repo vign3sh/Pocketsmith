@@ -7,7 +7,7 @@ from usergroups.serializer import AllGroupSerializer
 # Create your views here.
 
 class GetGroups(APIView):
-    #permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]
     def get (self, request):
         try:
             """

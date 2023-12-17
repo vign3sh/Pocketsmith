@@ -10,8 +10,7 @@ const initialState = {
     friendsFilters: {
         searchTerm:"",
         filters: 1
-    },
-    filteredFriends: []
+    }
 };
 
 export default function(state = initialState, action) {
@@ -21,14 +20,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 friends: payload,
-                filteredFriends: payload,
                 friendsLoaded: true,
             }
         case FRIENDS_FAIL:
             return {
                 ...state,
                 friends: [],
-                filteredFriends: []
             }
         case FILTER_FRIENDS:
             return {

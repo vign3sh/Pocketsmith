@@ -36,6 +36,7 @@ export const checkAuthenticated = () => async dispatch => {
         axios.defaults.baseURL = base_url;
         let reg_url='/authenticate/authenticated';
         const res = await axios.get(reg_url, body, config);
+        const {isAuthenticated, ...userDetails}=res.data;
 
         if (res.data.error || res.data.isAuthenticated === 'error') {
             dispatch({
@@ -46,7 +47,7 @@ export const checkAuthenticated = () => async dispatch => {
         else if (res.data.isAuthenticated === 'success') {
             dispatch({
                 type: AUTHENTICATED_SUCCESS,
-                payload: true
+                payload: userDetails
             });
         }
         else {
@@ -121,13 +122,15 @@ export const login = (username, password) => async dispatch => {
     try {
         let reg_url='/authenticate/login';
         const res = await axios.post(reg_url, body, config);
+        const {success, ...userDetails}=res.data;
         if (res.data.error) {
             dispatch({
                 type: LOGIN_FAIL
             });
         } else {
             dispatch({
-                type: LOGIN_SUCCESS
+                type: LOGIN_SUCCESS,
+                payload: userDetails
             });
         }
     } catch (err) {

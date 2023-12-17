@@ -91,7 +91,7 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
                                 borderRadius: "100px",
                                 minWidth: "130px",
                                 justifyContent: "center",
-                                margin: "10px",                  
+                                margin: "10px",
                             },
 
                             "fieldset":{
@@ -150,7 +150,7 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
                             ))}
                         </Select>
                     </FormControl>
-                    <Box style={{ textDecoration: "none", color:`var(--main-bg-color)`, height:"45px" }} component={Link}  to={`/${filterType}/add`} >
+                    <Box style={{ textDecoration: "none", color:`var(--main-bg-color)`, height:"45px" }} component={Link}  to={`/${filterType}add`} >
                         {filterType=='friends'?<PersonAddAltOutlinedIcon style={{ fontSize: "45px" }} />:<GroupAddOutlinedIcon style={{ fontSize: "45px" }} />}
                     </Box>
                 </Box>
