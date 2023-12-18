@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -10,23 +9,15 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import backgroundImage from "../../assets/images/backgroundImage.jpg"
+import backgroundImage from "../../assets/images/backgroundImage.png"
 import { register,login } from '../../actions/auth';
-import { useSelector, connect } from 'react-redux';
-import { useNavigate } from "react-router-dom"
-import { useEffect } from "react";
+import { connect } from 'react-redux';
 import CSRFToken from '../../components/CSRFToken';
+import {CustomBorderTextField} from '../../components/CustomTextField';
+
   
   // TODO remove, this demo shouldn't need to reset the theme.
 const authentication = ({dispatch}) => {
-
-  /*
-    const navigate = useNavigate();
-    let base_url = window.location.origin;
-    if (isAuthenticated && base_url!=='http://localhost:5173'){
-      navigate("/friends");
-    }
-    */
 
     const defaultTheme = createTheme();
 
@@ -71,7 +62,8 @@ const authentication = ({dispatch}) => {
       
 
       let ConfirmPasswordField = basePage==='register' ?
-            (<TextField
+            (<CustomBorderTextField
+              $secondaryColor={false}
                 margin="normal"
                 required
                 fullWidth
@@ -92,7 +84,7 @@ const authentication = ({dispatch}) => {
               item
               xs={false}
               sm={4}
-              md={7}
+              md={6}
               sx={{
                 //backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
                 backgroundImage: `url(${backgroundImage})`,
@@ -103,28 +95,30 @@ const authentication = ({dispatch}) => {
                 backgroundPosition: 'center',
               }}
             />
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
               <Box
                 sx={{
-                  my: 8,
                   mx: 4,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100vh',
                 }}
               >
                 <CssBaseline />
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <Avatar sx={{ m: 1, bgcolor: "var(--main-bg-color)" }}>
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Sign in
+                {basePage === 'register' ? "Sign Up":"Log In"}
                 </Typography>
                 <Box noValidate sx={{ mt: 1 }}>
                 <CssBaseline />
                 <form onSubmit={onSubmit}>
                   <CSRFToken/>
-                  <TextField
+                  <CustomBorderTextField
+                    $secondaryColor={false}
                     margin="normal"
                     required
                     fullWidth
@@ -135,7 +129,8 @@ const authentication = ({dispatch}) => {
                     autoFocus
                     onChange={e => onChange(e)}
                   />
-                  <TextField
+                  <CustomBorderTextField
+                    $secondaryColor={false}
                     margin="normal"
                     required
                     fullWidth
@@ -151,7 +146,7 @@ const authentication = ({dispatch}) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, background: "var(--main-bg-color)", ':hover': {background: "var(--main-bg-color)"}}}
                   >
                     {basePage === 'register' ? "Sign Up":"Log In"}
                   </Button>
@@ -160,7 +155,7 @@ const authentication = ({dispatch}) => {
                     <Grid item xs>
                     </Grid>
                     <Grid item>
-                    <Link href="#" variant="body2" onClick={switchPages}>
+                    <Link href="#" variant="body2" onClick={switchPages} sx={{color:"var(--main-bg-color)", textDecorationColor:"var(--main-bg-color)"}}>
                         {basePage === 'register' ? "Already have an account? Log in":"Don't have an account? Sign Up"}
                     </Link>
                     </Grid>

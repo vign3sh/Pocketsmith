@@ -1,38 +1,11 @@
 import React from 'react'
-import { Box, TextField, Select, MenuItem, FormControl, Typography } from '@mui/material';
+import { Box, Select, MenuItem, FormControl, Typography } from '@mui/material';
 import debounce from 'lodash.debounce';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {ExpandMoreRounded as ExpandMoreRoundedIcon, GroupAddOutlined as GroupAddOutlinedIcon, PersonAddAltOutlined as PersonAddAltOutlinedIcon} from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { roundAmount } from '../utils/utils';
-import styled from "styled-components";
-
-
-const CustomBorderTextField = styled(TextField)`
-    & .MuiOutlinedInput-root {
-        
-        border-radius: 100px;
-        fieldset {
-            border-color: var(--main-bg-color); 
-        }
-        &:hover fieldset {
-            border-color: var(--secondary-bg-color);
-        }
-        &.Mui-focused fieldset {
-            border-color: var(--secondary-bg-color); 
-        }
-    }
-    label {
-        color: var(--main-bg-color);
-    }
-    &:hover label {
-        color: var(--secondary-bg-color);
-    }
-    label.Mui-focused{
-        color: var(--secondary-bg-color);
-    }
-    
-`;
+import {CustomBorderTextField} from './CustomTextField';
 
 export const Filters = ({selectedFilters, items, filterType, handleFilters, handleSearch, data}) => {
 
@@ -74,11 +47,12 @@ export const Filters = ({selectedFilters, items, filterType, handleFilters, hand
 
             <Box sx={{display: 'flex', alignItems: 'center', justifyContent:{xs: "space-between", sm: "center"} , mx: "10px", width:{xs: "100%", sm:"auto"} }}>
                 <CustomBorderTextField
-                label="Search"
-                type="text"
-                value={search}
-                onChange={updateSearch} 
-                style={{maxWidth: "160px"}}/>
+                    $secondaryColor={true}
+                    label="Search"
+                    type="text"
+                    value={search}
+                    onChange={updateSearch} 
+                    style={{maxWidth: "160px"}}/>
 
                 <Box sx={{ display: "flex", alignItems: "center"}}>
                     <FormControl
