@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import backgroundImage from "../../assets/images/backgroundImage.png"
+import backgroundImage from "../../assets/images/backgroundImage.jpg"
 import { register,login } from '../../actions/auth';
 import { connect } from 'react-redux';
 import CSRFToken from '../../components/CSRFToken';
@@ -113,7 +113,7 @@ const authentication = ({dispatch}) => {
                 <Typography component="h1" variant="h5">
                 {basePage === 'register' ? "Sign Up":"Log In"}
                 </Typography>
-                <Box noValidate sx={{ mt: 1 }}>
+                <Box noValidate sx={{ mt: 1, maxWidth: "550px"}}>
                 <CssBaseline />
                 <form onSubmit={onSubmit}>
                   <CSRFToken/>
