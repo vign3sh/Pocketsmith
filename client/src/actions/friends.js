@@ -47,31 +47,4 @@ export const filterFriends = (friendsFilter) => async dispatch => {
         type: FILTER_FRIENDS,
         payload: friendsFilter
     });
-
-    /*
-    try {        
-        const search_url="/user/getFriends";
-        const res = await axios.get(search_url, config);
-        // JSON.stringify(res.data)
-        const data=res.data;
-        if (res.data.error) {
-            dispatch({
-                type: FRIENDS_FAIL
-
-            });
-        } else {
-            dispatch({
-                type: FRIENDS_SUCCESS,
-                payload: data['friends']
-            });
-        }
-    } 
-    
-    catch (err) {
-        console.log(err);
-        dispatch({
-            type: FRIENDS_FAIL
-        });
-    }
-    */
 };

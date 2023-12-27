@@ -26,7 +26,7 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
         return first.charAt(0).toUpperCase() + first.slice(1) + " " + last.charAt(0).toUpperCase();
     }
    
-    return (<Grid container spacing={{xs:2}} padding={{xs:2,sm:4}}>
+    return (<Grid container spacing={{xs:1 , sm:2}} padding={{xs:2,sm:4}}>
                 {data.map(({id, first_name, last_name, grp_name, pfp, amount, description},i) =>{
                     amount=roundAmount(amount);
                     first_name=first_name?setFriendName(first_name,last_name):first_name;
@@ -36,8 +36,8 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
                     return (
                         
                         <Grid item xs={12} sm={6} md={4} key={id} component={Link}  to={`/${componentType}/${id}`} style={{ textDecoration: "none"}}> 
-                            <Card className='card' variant="outlined" sx={{ ':hover': {boxShadow: 20,}}}>
-                                {/*"&:hover": {borderColor:(amount===0 || !amount)?"orange":amount>0?"green":"red", borderBlockWidth:"1px", },}}>*/}
+                            <Card className='card' sx={{boxShadow:0, ':hover': {boxShadow: 20,}}}>
+                                {/*"&:hover": {borderColor:(amount===0 || !amount)?"orange":amount>0?"green":"red", borderBlockWidth:"1px", }  borderBottom: "1px solid rgba(0, 0, 0, 0.12)", ,}}>*/}
                                 <Box className="cardGrid">
                                         <Box >
                                             {/*<img className="cardAvatar" src={pfp?imageList[pfp]:imageList[randomImageIndex]}
@@ -47,7 +47,7 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
                                         </Box>
                                         
                                         <Box className="cardDetails">
-                                            <Typography className="cardName" gutterBottom variant="h6" component="div">
+                                            <Typography className="cardName" gutterBottom variant="h6" component="div" sx={{ fontSize:{xs:'16px', sm:'18px'}}}>
                                                 {grp_name? grp_name: first_name}
                                             </Typography>
                                             
@@ -72,7 +72,7 @@ const cards = ({data, componentType, loaded, aws_link, noCards, total_data}) => 
                                                     )
                                                     }
                                             </Typography>
-                                            <Typography gutterBottom variant="h6" component="div" sx={{ display:`${(amount===0 || !amount)?"none":"flex"}` }}>
+                                            <Typography gutterBottom variant="h6" component="div" sx={{ display:`${(amount===0 || !amount)?"none":"flex"}`, fontSize:{xs:'18px', sm:'20px'}, justifyContent: 'flex-end'}}>
                                                     {amount>0? `$${amount}`: `$${-amount}`}
                                             </Typography>
                                         </Box>

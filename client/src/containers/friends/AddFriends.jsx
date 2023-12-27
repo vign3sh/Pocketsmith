@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import AddUser from "../../components/AddUser";
 
 function AddFriends() {
-  return (
-    <div>AddFriends</div>
-  )
+
+    return(
+    <div>
+        Add Friends
+        <AddUser/>
+        
+        
+    </div>
+    );
 }
 
-export default AddFriends
+export default AddFriends;

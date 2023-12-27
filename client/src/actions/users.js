@@ -12,11 +12,7 @@ export const GetSearchedUsers = async(search) => {
         }
     };
 
-
-
     try {
-
-        
         const search_url="/user/addUsers";
         const res = await axios.get(search_url, config);
         // JSON.stringify(res.data)
@@ -29,7 +25,7 @@ export const GetSearchedUsers = async(search) => {
             return data.profiles.map(profile => {
                 return {
                     id: profile.id,
-                    name: profile.first_name,
+                    name: profile.first_name+" "+profile.last_name,
                 }
             });
         }

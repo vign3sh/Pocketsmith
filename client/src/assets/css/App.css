@@ -7,4 +7,15 @@
     --neutral-color: #F1C40F;
   }
 
+.customButton{
+  color:white !important;
+  background:var(--main-bg-color)!important;
+  text-align:center;
+  width: 100% !important;
+}
+
+.customButton:hover{
+  background:var(--main-bg-color)!important;
+}
+
  

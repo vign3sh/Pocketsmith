@@ -10,6 +10,7 @@ from userprofile.seralizers import FriendSerializer
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.models import User
 from django.db.models import Q
+import time
 # Create your views here.
 
 class GetAllPublicUsers(APIView):
@@ -44,7 +45,7 @@ class BulkDeleteTestUsers(APIView):
         return Response({ 'success': 'User deleted successfully' })
 
 class AddUsers(APIView):
-    #permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]
     def get (self, request):
         try:
             
@@ -53,6 +54,7 @@ class AddUsers(APIView):
             
             searchTerm = data.get('search', '')
             if searchTerm == '':
+                time.sleep(0.5)
                 return Response({ 'error': 'Search term is required' })
             user_profiles = UserProfile.objects.filter( Q(first_name__icontains=searchTerm) 
             | Q(last_name__icontains=searchTerm)
@@ -69,7 +71,7 @@ class AddUsers(APIView):
             
             users_details = FriendSerializer(user_profiles, many=True)
             
-            return Response({ 'profiles': users_details.data})
+            return Response({ 'profiles': users_details.data[:4]})
         except:
             return Response({ 'error': 'Something went wrong when retrieving profiles' })
 
